@@ -1,4 +1,4 @@
-export const initRequest = async ({ API, API_EXTERNAL, UUID }) => (
+export const initRequest = async ({ API, API_EXTERNAL, uuid }) => (
     fetch(`${API}/chat/init`, {
         method: 'POST',
         headers: {
@@ -7,12 +7,12 @@ export const initRequest = async ({ API, API_EXTERNAL, UUID }) => (
         },
         body: JSON.stringify({
             api: API_EXTERNAL,
-            uuid: UUID
+            uuid: uuid
         })
     })
 )
 
-export const eventRequestReady = async ({ API, API_EXTERNAL, CUID }) => (
+export const eventRequestReady = async ({ API, API_EXTERNAL, cuid }) => (
     fetch(`${API}/chat/event-ready`, {
         method: 'POST',
         headers: {
@@ -21,7 +21,7 @@ export const eventRequestReady = async ({ API, API_EXTERNAL, CUID }) => (
         },
         body: JSON.stringify({
             api: API_EXTERNAL,
-            cuid: CUID
+            cuid: cuid
         })
     })
 )

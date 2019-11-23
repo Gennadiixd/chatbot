@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { saveToLocalStorage, getFromLocalStorage } from '../utils/localStorageHandler';
-import { initResponseModel, serviceResponseModel } from '../models/response';
+import { checkLocalStorageItem, getCUID } from '../utils/IDHandlers';
+import { initResponseModel } from '../models/response';
 import { initRequest, eventRequestReady } from './requests';
 
 const API = process.env.API;
-const UUID = process.env.UUID;
+const uuid = process.env.UUID;
 const API_EXTERNAL = process.env.API_EXTERNAL;
-//TODO: remove all object destructions to server
+
+const reqParams = { API, API_EXTERNAL, uuid };
+
 export function useInitChat() {
 	const [loading, setLoading] = useState(false);
 	const [initInfo, setInitInfo] = useState(initResponseModel);
@@ -15,35 +17,50 @@ export function useInitChat() {
 	useEffect(() => {
 		async function init() {
 			setLoading(true);
-			initRequest({ API, API_EXTERNAL, UUID })
+			initRequest({ API, API_EXTERNAL, uuid })
 				.then(resp => resp.json())
 				.then(data => {
 					setLoading(false);
-					const { result: { cuid } } = data;
-					saveToLocalStorage('cuid', cuid);
+					const { cuid } = data;
+					checkLocalStorageItem('cuid', cuid);
 					setInitInfo(data);
 				})
 				.catch(err => {
+					setLoading(false);
 					setError(err);
 				})
 		}
 		init();
 	}, []);
 
-	const { result: { cuid, inf: { name } } } = initInfo;
+	const { cuid, name } = initInfo;
 	return { loading, cuid, infName: name, error }
 }
 
-export function useEventReady() {
-	const CUID = getFromLocalStorage('cuid');
-	eventRequestReady({ API, API_EXTERNAL, UUID, CUID })
+export async function sendEventReady() {
+	let cuid = await getCUID(reqParams);
+	return eventRequestReady({ API, API_EXTERNAL, uuid, cuid })
 		.then(resp => resp.json())
 		.then(data => {
-			const { result: { cuid, text: { value } } } = data;
-			saveToLocalStorage(cuid);
-			return value;
+			const { cuid, value } = data;
+			checkLocalStorageItem('cuid', cuid);
+			return { message: value };
 		})
-		.catch(err => {
-			return err;
+		.catch(error => {
+			throw error;
+		})
+}
+
+export async function sendMessage() {
+	let cuid = await getCUID(reqParams);
+	return eventRequestReady({ API, API_EXTERNAL, uuid, cuid })
+		.then(resp => resp.json())
+		.then(data => {
+			const { cuid, value } = data;
+			checkLocalStorageItem('cuid', cuid);
+			return { message: value };
+		})
+		.catch(error => {
+			throw error;
 		})
 }
