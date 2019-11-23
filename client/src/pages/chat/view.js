@@ -1,13 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useInitChat } from '../../services/ChatService';
+import { useInitChat, useEventReady } from '../../services/ChatService';
 
 export default function View() {
-	const { loading, initInfo } = useInitChat();
-	console.log(initInfo);
+	const [chatHistory, setChatHistory] = useState({});
+	const { loading, cuid, infName } = useInitChat();
+
 	return (
 		<div>
-			{loading && <div>Loading</div>}
+			<button
+				onClick={() => setChatHistory(
+					// ...chatHistory,
+					useEventReady()
+				)}
+			>
+				Погнали
+			</button>
+
+			<button
+				onClick={() => console.log(chatHistory)}
+			>
+				Логи
+			</button>
 		</div>
 	)
 }

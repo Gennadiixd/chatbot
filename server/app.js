@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+require('dotenv').config();
 
 const chatRoutes = require('./routes/chat');
 
 const app = express();
-
 app.use(morgan('dev'));
 //TODO: set CORS for concrete domains
 app.use(cors());
