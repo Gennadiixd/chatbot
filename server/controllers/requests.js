@@ -13,26 +13,26 @@ class Request {
 		}
 	}
 
-	getBody() {
+	createBody() {
 		return {}
 	}
 
 	send() {
 		return fetch(`${this.api}.${this.type}`, {
 			...this.fetchSettings,
-			body: JSON.stringify(this.getBody())
+			body: JSON.stringify(this.createBody())
 		})
 	}
 }
 
 class InitRequest extends Request {
-	constructor(api, uuid) {
+	constructor({api, uuid}) {
 		super(api)
 		this.type = 'init'
 		this.uuid = uuid
 	}
 
-	getBody() {
+	createBody() {
 		return {
 			uuid: this.uuid
 		}
@@ -40,14 +40,14 @@ class InitRequest extends Request {
 }
 
 class EventReadyRequest extends Request {
-	constructor(api, cuid) {
+	constructor({api, cuid}) {
 		super(api)
 		this.type = 'event'
 		this.euid = process.env.EVENT_READY_EUID
 		this.cuid = cuid
 	}
 
-	getBody() {
+	createBody() {
 		return {
 			euid: this.euid,
 			cuid: this.cuid,
@@ -56,16 +56,16 @@ class EventReadyRequest extends Request {
 }
 
 class MessageRequest extends Request {
-	constructor(api, cuid, text) {
+	constructor({api, cuid, userMessage}) {
 		super(api)
 		this.type = 'request'
-		this.text = text
+		this.userMessage = userMessage
 		this.cuid = cuid
 	}
 
-	getBody() {
+	createBody() {
 		return {
-			text: this.text,
+			text: this.userMessage,
 			cuid: this.cuid,
 		}
 	}

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { useInitChat, sendEventReady, sendMessage } from '../../services/ChatService';
+import { sendEventReady, sendMessage } from '../../services/ChatService';
 
-export default function View() {
+export default function View({ }) {
 	const [chatHistory, setChatHistory] = useState({});
-	const { loading, cuid, infName } = useInitChat();
 
 	const [userInput, setUserInput] = useState('');
 	const [botMessage, setBotMessage] = useState('');
-
 
 	const getReady = () => {
 		sendEventReady().then(data => setChatHistory(data.botMessage));

@@ -1,8 +1,7 @@
 const { InitRequest, EventReadyRequest, MessageRequest } = require('./requests.js');
 
 exports.initChat = (req, res) => {
-  const { api, uuid } = req.body;
-  new InitRequest(api, uuid)
+  new InitRequest({ ...req.body })
     .send()
     .then(resp => resp.json())
     .then(data => {
@@ -15,8 +14,7 @@ exports.initChat = (req, res) => {
 };
 
 exports.eventReady = (req, res) => {
-  const { api, cuid } = req.body;
-  new EventReadyRequest(api, cuid)
+  new EventReadyRequest({ ...req.body })
     .send()
     .then(res => res.json())
     .then(data => {
@@ -29,9 +27,7 @@ exports.eventReady = (req, res) => {
 };
 
 exports.sendMessage = (req, res) => {
-  console.log(req.body);
-  const { api, cuid, userMessage } = req.body
-  new MessageRequest(api, cuid, userMessage)
+  new MessageRequest({ ...req.body })
     .send()
     .then(res => res.json())
     .then(data => {
