@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { checkLocalStorageItem, getCUID } from '../utils/IDHandlers';
 import { initResponseModel } from '../models/response';
-import { initRequest, eventRequestReady } from './requests';
+import { initRequest, eventRequestReady, requestMessage } from './requests';
 
 const API = process.env.API;
 const uuid = process.env.UUID;
@@ -36,29 +36,29 @@ export function useInitChat() {
 	const { cuid, name } = initInfo;
 	return { loading, cuid, infName: name, error }
 }
-
+//TODO: DRY
 export async function sendEventReady() {
 	let cuid = await getCUID(reqParams);
-	return eventRequestReady({ API, API_EXTERNAL, uuid, cuid })
+	return eventRequestReady({ API, API_EXTERNAL, cuid })
 		.then(resp => resp.json())
 		.then(data => {
 			const { cuid, value } = data;
 			checkLocalStorageItem('cuid', cuid);
-			return { message: value };
+			return { botMessage: value };
 		})
 		.catch(error => {
 			throw error;
 		})
 }
 
-export async function sendMessage() {
+export async function sendMessage(userMessage) {
 	let cuid = await getCUID(reqParams);
-	return eventRequestReady({ API, API_EXTERNAL, uuid, cuid })
+	return requestMessage({ API, API_EXTERNAL, cuid, userMessage})
 		.then(resp => resp.json())
 		.then(data => {
 			const { cuid, value } = data;
 			checkLocalStorageItem('cuid', cuid);
-			return { message: value };
+			return { botMessage: value };
 		})
 		.catch(error => {
 			throw error;

@@ -4,6 +4,13 @@ class Request {
 	constructor(api) {
 		this.api = api
 		this.type = ''
+		this.fetchSettings = {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				"Content-Type": 'application/json'
+			},
+		}
 	}
 
 	getBody() {
@@ -12,11 +19,7 @@ class Request {
 
 	send() {
 		return fetch(`${this.api}.${this.type}`, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				"Content-Type": 'application/json'
-			},
+			...this.fetchSettings,
 			body: JSON.stringify(this.getBody())
 		})
 	}
@@ -52,4 +55,20 @@ class EventReadyRequest extends Request {
 	}
 }
 
-module.exports = { InitRequest, EventReadyRequest }
+class MessageRequest extends Request {
+	constructor(api, cuid, text) {
+		super(api)
+		this.type = 'request'
+		this.text = text
+		this.cuid = cuid
+	}
+
+	getBody() {
+		return {
+			text: this.text,
+			cuid: this.cuid,
+		}
+	}
+}
+
+module.exports = { InitRequest, EventReadyRequest, MessageRequest }
