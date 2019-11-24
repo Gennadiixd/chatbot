@@ -9,8 +9,9 @@
 
 .chat-window {
   width: 50rem;
-  height: 20rem;
+  min-height: 20rem;
   background: rgb(245, 244, 244);
+  overflow-y: scroll;
 }
 .message-container {
   padding: 0.8rem;

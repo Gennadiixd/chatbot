@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
 		currentUserMessage: state.chat.currentUserMessage,
 		currentBotMessage: state.chat.currentBotMessage, 
 		isInitialized: state.chat.isInitialized,
+		history: state.chat.history,
 	}
 }
 

@@ -1,18 +1,19 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 export default function ChatStart({
-  isDisabled,
-  getReady
+  isInitialized,
+  getReady,
+  isVisible
 }) {
   return (
-    <Fragment>
-      {isDisabled && (
-        <div className="btn">
+    <div className="start">
+      {isInitialized && isVisible &&  (
+        <div className="btn --start">
           <button onClick={getReady}>
             Начать чат
 					</button>
         </div>
       )}
-    </Fragment>
+    </div>
   )
 }

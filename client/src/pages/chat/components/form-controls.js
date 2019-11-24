@@ -30,7 +30,7 @@ export default function FormControls({
             disabled={isDisabled}
           >
             Отправить
-						</button>
+          </button>
         </div>
       </form>
     </div>
