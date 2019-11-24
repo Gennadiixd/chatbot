@@ -11,8 +11,6 @@ const LoadAndErrorHandler = ({ initChat, loading, error, children }) => {
   //TODO: add error boundry
   if (loading) {
     return <Spinner />
-  } else if (error) {
-    return <Spinner />
   } else {
     return (
       <Fragment>

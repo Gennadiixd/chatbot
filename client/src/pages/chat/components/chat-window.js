@@ -10,14 +10,16 @@ export default function ChatWindow({
   history,
 }) {
   useEffect(() => {
-    //TODO:scroll to bottom of window
-  }, []);
+    //TODO: looks like hack, research more about
+    mainRef.current.scrollTop = mainRef.current.scrollHeight;
+  });
 
   const mainRef = useRef(null);
 
   return (
     <div
       className="chat-window"
+      ref={mainRef}
     >
       <History
         messageObject={currentUserMessage}

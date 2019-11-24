@@ -7,12 +7,13 @@ export default function ChatStart({
 }) {
   return (
     <div className="start">
-      {isInitialized && isVisible &&  (
-        <div className="btn --start">
-          <button onClick={getReady}>
-            Начать чат
-					</button>
-        </div>
+      {isInitialized && isVisible && (
+        <button
+          className="btn --start"
+          onClick={getReady}
+        >
+          Начать чат
+        </button>
       )}
     </div>
   )

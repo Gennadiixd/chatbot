@@ -13,6 +13,7 @@
   max-height: 25rem;
   background: rgb(245, 244, 244);
   overflow-y: scroll;
+  margin-bottom: 1rem;
 }
 
 .message-container {
@@ -40,8 +41,27 @@
   margin: 0 0.2rem;
 }
 
+.chat-controls-container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.chat-input{
+  width: 25rem;
+  height: auto;
+}
+
+.btn{
+   border: 1px solid black;
+}
+.btn:hover {
+    background-color: rgb(199, 199, 199);
+}
+
 .--accent-gray{
-background:#efefef;
+  background:#efefef;
 }
 
 .--right{

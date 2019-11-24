@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
+const defaultPlaceholder = 'Введите ваше сообщение боту';
+
 export default function FormControls({
   sendMessage,
   isDisabled
 }) {
   const [userInput, setUserInput] = useState('');
+  const [placeholder, setPlaceholder] = useState(defaultPlaceholder);
 
   const inputHandler = (e) => {
     setUserInput(e.target.value);
@@ -12,27 +15,40 @@ export default function FormControls({
 
   const submitHandler = (e) => {
     e.preventDefault();
-    sendMessage(userInput);
+    if (userInput && typeof userInput === 'string') {
+      sendMessage(userInput);
+      setUserInput('');
+      setPlaceholder(defaultPlaceholder)
+    } else {
+      setPlaceholder('Не отправляйте боту пустые сообщения')
+    }
+  }
+
+  const enterPressHandler = (e) => {
+    if (e.key === 'Enter') {
+      submitHandler(e);
+    }
   }
 
   return (
-    <div className="chat-controls">
-      <form onSubmit={submitHandler}>
-        <input
-          onChange={inputHandler}
+    <form onSubmit={submitHandler}>
+      <textarea
+        className="chat-input"
+        onChange={inputHandler}
+        disabled={isDisabled}
+        value={userInput}
+        onKeyPress={enterPressHandler}
+        placeholder={placeholder}
+      />
+      <div>
+        <button
+          type='submit'
           disabled={isDisabled}
-          value={userInput}
-          type="text"
-        />
-        <div className="btn --submit">
-          <button
-            type='submit'
-            disabled={isDisabled}
-          >
-            Отправить
-          </button>
-        </div>
-      </form>
-    </div>
+          className="btn --submit"
+        >
+          Отправить
+        </button>
+      </div>
+    </form>
   )
 }

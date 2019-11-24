@@ -21,10 +21,13 @@ const setLoaded = () => {
 }
 
 const setError = (error) => {
-	return {
-		type: C.SET_CHAT_ERROR,
-		payload: error
-	}
+	console.log(error);
+	// TODO: research false activations was observed
+	
+	// return {
+	// 	type: C.SET_CHAT_ERROR,
+	// 	payload: error
+	// }
 }
 
 const setInitialized = (boolean) => {
@@ -113,9 +116,5 @@ export const sendMessageAC = (userMessage) => {
 				dispatch(setError(error));
 				dispatch(setLoaded());
 			})
-		//если есть сообщения в редьюсере запушить их в историю
-		//отправить сообщение в редьюсер
-		//отправить сообщение на сервер
-		//принять ответ от сервера в редьюсер
 	}
 }

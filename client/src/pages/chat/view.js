@@ -16,23 +16,28 @@ export default function View({
 }) {
 	return (
 		<div className="chat-container">
-			<ChatWindow
-				currentUserMessage={currentUserMessage}
-				currentBotMessage={currentBotMessage}
-				history={history}
-			/>
-			<FormControls
-				sendMessage={sendMessage}
-				isDisabled={!currentBotMessage}
-			/>
-			<ChatStart
-				isVisible={!currentBotMessage}
-				isInitialized={isInitialized}
-				getReady={sendEventReady}
-			/>
-			<ChatReset 
-				resetChat={resetChat}
-			/>
+			<div className="chat">
+				<ChatWindow
+					currentUserMessage={currentUserMessage}
+					currentBotMessage={currentBotMessage}
+					history={history}
+				/>
+				<div className="chat-controls-container">
+					<FormControls
+						sendMessage={sendMessage}
+						isDisabled={!currentBotMessage}
+					/>
+					<ChatStart
+						isVisible={!currentBotMessage}
+						isInitialized={isInitialized}
+						getReady={sendEventReady}
+					/>
+					<ChatReset
+						resetChat={resetChat}
+						isVisible={!currentBotMessage}
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }
