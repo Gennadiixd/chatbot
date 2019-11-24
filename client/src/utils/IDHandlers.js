@@ -1,12 +1,15 @@
 import { initRequest } from '../services/requests';
 
 export const checkLocalStorageItem = (name, value) => {
-	if (!value) {
-		throw new Error('value for localStorage undefined')
-	}
-	const fromLocalStorage = localStorage.getItem(name);
-	if (fromLocalStorage !== value) {
-		localStorage.setItem(name, value);
+	if (!value) throw new Error('value for localStorage undefined');
+	
+	try {
+		const fromLocalStorage = localStorage.getItem(name);
+		if (fromLocalStorage !== value) {
+			localStorage.setItem(name, value);
+		}
+	} catch (error) {
+		throw error;
 	}
 }
 
@@ -28,8 +31,11 @@ const CUIDHelper = async ({ API, API_EXTERNAL, uuid }) => {
 }
 
 export const getCUID = async (reqParams) => {
-	const cuid = localStorage.getItem('cuid');
-	if (!cuid) {
+	try {
+		const cuid = localStorage.getItem('cuid');
+		if (!cuid) throw new Error('cuid nor found');
+		return cuid;
+	} catch (error) {
 		return CUIDHelper(reqParams)
 			.then(cuid => {
 				return cuid;
@@ -37,7 +43,5 @@ export const getCUID = async (reqParams) => {
 			.catch(error => {
 				throw error
 			})
-	} else {
-		return cuid;
 	}
 }

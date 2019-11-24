@@ -1,5 +1,12 @@
 import * as C from './consts';
-import { initChat, sendMessage, sendEventReady } from '../../services/ChatService'
+import { initChat, sendMessage, sendEventReady } from '../../services/ChatService';
+import { getTimeObject } from '../../utils/dateTimeHandler'
+
+const resetError = () => {
+	return {
+		type: C.RESET_CHAT_ERROR,
+	}
+}
 
 const setLoading = () => {
 	return {
@@ -41,8 +48,15 @@ const setCurrentBotMessage = (message) => {
 	}
 }
 
+export const resetChatAC = () => {
+	return {
+		type: C.RESET_CHAT,
+	}
+}
+
 export const initChatAC = () => {
 	return (dispatch) => {
+		dispatch(resetError());
 		dispatch(setLoading());
 		initChat()
 			.then(() => {
@@ -61,7 +75,12 @@ export const sendEventReadyAC = () => {
 		dispatch(setLoading());
 		sendEventReady()
 			.then((botMessage) => {
-				dispatch(setCurrentBotMessage(botMessage));
+				dispatch(setCurrentBotMessage(
+					{
+						message: botMessage,
+						...getTimeObject()
+					}
+				));
 				dispatch(setLoaded());
 			})
 			.catch(error => {
@@ -73,11 +92,21 @@ export const sendEventReadyAC = () => {
 
 export const sendMessageAC = (userMessage) => {
 	return (dispatch) => {
-		dispatch(setCurrentUserMessage(userMessage));
+		dispatch(setCurrentUserMessage(
+			{
+				message: userMessage,
+				...getTimeObject()
+			}
+		));
 		dispatch(setLoading());
 		sendMessage(userMessage)
 			.then((botMessage) => {
-				dispatch(setCurrentBotMessage(botMessage));
+				dispatch(setCurrentBotMessage(
+					{
+						message: botMessage,
+						...getTimeObject()
+					}
+				));
 				dispatch(setLoaded());
 			})
 			.catch(error => {

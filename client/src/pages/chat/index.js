@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import WithLoadAndError from '../../hoc/withLoadAndError';
 import './chat.css';
 
-import { sendEventReadyAC, sendMessageAC } from '../../redux/chat/actions';
+import { sendEventReadyAC, sendMessageAC, resetChatAC } from '../../redux/chat/actions';
 import View from './view';
 
 const mapDispathcToProps = (dispatch) => {
 	return {
 		sendEventReady: bindActionCreators(sendEventReadyAC, dispatch),
-		sendMessage: bindActionCreators(sendMessageAC, dispatch)
+		sendMessage: bindActionCreators(sendMessageAC, dispatch),
+		resetChat: bindActionCreators(resetChatAC, dispatch)
 	}
 }
 

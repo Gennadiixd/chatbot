@@ -21,13 +21,13 @@ export default (state = initState, action) => {
 				...state,
 				currentUserMessage: action.payload
 			}
-			case C.SET_CURRENT_BOT_MESSAGE:
-				return {
-					...state,
-					history: [...state.history, {
-						userMessage: state.currentUserMessage,
-						botMessage: action.payload
-					}],
+		case C.SET_CURRENT_BOT_MESSAGE:
+			return {
+				...state,
+				history: [...state.history, {
+					userMessage: state.currentUserMessage,
+					botMessage: action.payload
+				}],
 				currentBotMessage: action.payload
 			}
 		case C.SET_CHAT_LOADING:
@@ -44,6 +44,16 @@ export default (state = initState, action) => {
 			return {
 				...state,
 				error: action.payload
+			}
+		case C.RESET_CHAT_ERROR:
+			return {
+				...state,
+				error: false
+			}
+		case C.RESET_CHAT:
+			return {
+				...initState,
+				isInitialized: true
 			}
 		default: return state
 	}

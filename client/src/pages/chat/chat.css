@@ -9,10 +9,12 @@
 
 .chat-window {
   width: 50rem;
-  min-height: 20rem;
+  min-height: 25rem;
+  max-height: 25rem;
   background: rgb(245, 244, 244);
   overflow-y: scroll;
 }
+
 .message-container {
   padding: 0.8rem;
   display: flex;
@@ -25,6 +27,21 @@
 .message{
   width: 40rem;
   text-align: justify;
+}
+
+.date-time-container {
+  font-size: 0.7rem;
+  margin-top: 0.3rem;
+}
+
+.dot{
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 0.2rem;
+}
+
+.--accent-gray{
+background:#efefef;
 }
 
 .--right{

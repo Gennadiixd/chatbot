@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import UserMessageContainer from './components/user-message-container';
-import BotMessageContainer from './components/bot-message-container';
 import FormControls from './components/form-controls';
 import ChatStart from './components/chat-start';
-import History from './components/history';
+import ChatWindow from './components/chat-window';
+import ChatReset from './components/chat-reset';
 
 export default function View({
 	currentUserMessage,
@@ -12,24 +11,16 @@ export default function View({
 	sendEventReady,
 	isInitialized,
 	sendMessage,
-	history
+	resetChat,
+	history,
 }) {
 	return (
 		<div className="chat-container">
-			<div className="chat-window">
-				<div className="history">
-					<History
-						currentUserMessage={currentUserMessage}
-						history={history}
-					/>
-				</div>
-				<UserMessageContainer
-					message={currentUserMessage}
-				/>
-				<BotMessageContainer
-					message={currentBotMessage}
-				/>
-			</div>
+			<ChatWindow
+				currentUserMessage={currentUserMessage}
+				currentBotMessage={currentBotMessage}
+				history={history}
+			/>
 			<FormControls
 				sendMessage={sendMessage}
 				isDisabled={!currentBotMessage}
@@ -38,6 +29,9 @@ export default function View({
 				isVisible={!currentBotMessage}
 				isInitialized={isInitialized}
 				getReady={sendEventReady}
+			/>
+			<ChatReset 
+				resetChat={resetChat}
 			/>
 		</div>
 	)
