@@ -2,22 +2,24 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import WithLoadAndError from '../../hoc/withLoadAndError';
+import './chat.css';
 
-import { initChatAC } from '../../redux/chat/actions';
+import { sendEventReadyAC, sendMessageAC } from '../../redux/chat/actions';
 import View from './view';
 
 const mapDispathcToProps = (dispatch) => {
 	return {
-		initChat: bindActionCreators(initChatAC, dispatch)
+		sendEventReady: bindActionCreators(sendEventReadyAC, dispatch),
+		sendMessage: bindActionCreators(sendMessageAC, dispatch)
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		error: state.chat.error,
-		loading: state.chat.loading
+		currentUserMessage: state.chat.currentUserMessage,
+		currentBotMessage: state.chat.currentBotMessage, 
+		isInitialized: state.chat.isInitialized,
 	}
 }
 
 export default WithLoadAndError((connect(mapStateToProps, mapDispathcToProps)(View)))
-// export default (connect(mapStateToProps, mapDispathcToProps)(View))

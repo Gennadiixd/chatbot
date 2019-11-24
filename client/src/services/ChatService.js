@@ -11,16 +11,17 @@ const dataHandler = async (fromServer) => {
 	return fromServer
 		.then(resp => resp.json())
 		.then(data => {
+			//message from chatbot in value
 			const { cuid, value } = data;
 			checkLocalStorageItem('cuid', cuid);
-			return { botMessage: value };
+			return value;
 		})
 		.catch(error => {
 			throw error;
 		})
 }
 
-export async function initChat(){
+export async function initChat() {
 	return initRequest({ API, API_EXTERNAL, uuid })
 		.then(resp => resp.json())
 		.then(data => {

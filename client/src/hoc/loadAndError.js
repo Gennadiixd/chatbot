@@ -21,7 +21,7 @@ const LoadAndErrorHandler = ({ initChat, loading, error, children }) => {
     )
   }
 }
-
+//TODO: try to create universal initializer
 const mapDispatchToProps = (dispatch) => {
   return {
     initChat: bindActionCreators(initChatAC, dispatch)

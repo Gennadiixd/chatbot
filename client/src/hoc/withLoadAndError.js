@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadAndError from './loadAndError'
+import LoadAndError from './loadAndError';
 
 export default function WithLoadAndError(Wrapped) {
   return (props) => {

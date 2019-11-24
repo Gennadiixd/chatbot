@@ -1,55 +1,35 @@
 import React, { useState } from 'react';
 
-import { sendEventReady, sendMessage } from '../../services/ChatService';
+import UserMessageContainer from './components/user-message-container';
+import BotMessageContainer from './components/bot-message-container';
+import FormControls from './components/form-controls';
+import ChatStart from './components/chat-start';
 
-export default function View({ }) {
-	const [chatHistory, setChatHistory] = useState({});
-
-	const [userInput, setUserInput] = useState('');
-	const [botMessage, setBotMessage] = useState('');
-
-	const getReady = () => {
-		sendEventReady().then(data => setChatHistory(data.botMessage));
-	}
-
-	const inputHandler = (e) => {
-		setUserInput(e.target.value);
-	}
-
-	const submitHandler = (e) => {
-		e.preventDefault();
-		sendMessage(userInput).then(data => setBotMessage(data.botMessage));
-	}
-
+export default function View({
+	currentUserMessage,
+	currentBotMessage,
+	sendEventReady,
+	isInitialized,
+	sendMessage,
+}) {
 	return (
-		<div>
-			<button
-				onClick={getReady}
-			>
-				Погнали
-			</button>
-
-			<button
-				onClick={() => console.log(chatHistory)}
-			>
-				Логи
-			</button>
-
-			<form
-				onSubmit={submitHandler}
-			>
-				<div>{botMessage}</div>
-				<input
-					onChange={inputHandler}
-					value={userInput}
-					type="text"
+		<div className="chat-container">
+			<div className="chat-window">
+				<UserMessageContainer
+					message={currentUserMessage}
 				/>
-				<button
-					type='submit'
-				>
-					Отправить
-				</button>
-			</form>
+				<BotMessageContainer
+					message={currentBotMessage}
+				/>
+			</div>
+			<FormControls
+				sendMessage={sendMessage}
+				isDisabled={!currentBotMessage}
+			/>
+			<ChatStart
+				isDisabled={isInitialized}
+				getReady={sendEventReady}
+			/>
 		</div>
 	)
 }

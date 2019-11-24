@@ -16,6 +16,20 @@ export default (state = initState, action) => {
 				...state,
 				isInitialized: action.payload
 			}
+		case C.SET_CURRENT_USER_MESSAGE:
+			return {
+				...state,
+				currentUserMessage: action.payload
+			}
+			case C.SET_CURRENT_BOT_MESSAGE:
+				return {
+					...state,
+					history: [...state.history, {
+						userMessage: state.currentUserMessage,
+						botMessage: action.payload
+					}],
+				currentBotMessage: action.payload
+			}
 		case C.SET_CHAT_LOADING:
 			return {
 				...state,

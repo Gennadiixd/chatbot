@@ -13,10 +13,10 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use('/chat', chatRoutes)
+app.use('/chat', chatRoutes);
 
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
-    console.log(`server listening on ${port}`)
+    console.log(`server listening on ${port}`);
 })
