@@ -1,12 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 
 import History from './history';
-import UserMessageContainer from './user-message-container';
-import BotMessageContainer from './bot-message-container';
 
 export default function ChatWindow({
-  currentUserMessage,
-  currentBotMessage,
   history,
 }) {
   useEffect(() => {
@@ -22,19 +18,8 @@ export default function ChatWindow({
       ref={mainRef}
     >
       <History
-        messageObject={currentUserMessage}
         history={history}
       />
-      {currentUserMessage && (
-        <UserMessageContainer
-          messageObject={currentUserMessage}
-        />
-      )}
-      {currentBotMessage && (
-        <BotMessageContainer
-          messageObject={currentBotMessage}
-        />
-      )}
     </div>
   )
 }
